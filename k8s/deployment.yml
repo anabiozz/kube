@@ -1,0 +1,27 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: echo-deployment
+  namespace: echo-ns
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 2 # How many pods we can add at a time
+      maxUnavailable: 0 # Define how many pods can be unavailable during the rolling update
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      serviceAccount: echo
+      containers:
+      - image: anabiozz/echo:latest
+        imagePullPolicy: "Always"
+        name: echo
+        ports:
+        - containerPort: 8080

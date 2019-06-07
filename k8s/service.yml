@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: echo-service
+  namespace: echo-ns
+  labels:
+    app: echo
+spec:
+  type: ClusterIP
+  selector:
+    app: echo
+  ports:
+    - name: "http"
+      protocol: TCP
+      port: 80
+      targetPort: 8080
